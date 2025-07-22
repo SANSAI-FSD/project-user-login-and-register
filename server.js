@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/auth.js";
+import petRoutes from "./routes/pets.js"
 
 dotenv.config();
 const app = express();
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/pets", petRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
