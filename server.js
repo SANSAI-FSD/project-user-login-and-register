@@ -7,7 +7,11 @@ import petRoutes from "./routes/pets.js"
 import adminRoutes from "./routes/admin.js";
 // const adminRoutes = require('./routes/admin');
 
-
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  allowedHeaders: ["Content-Type", "username"], // ✅ Include custom header
+}));
 dotenv.config();
 const app = express();
 
