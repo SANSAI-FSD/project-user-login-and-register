@@ -2,35 +2,29 @@
 // const router = express.Router();
 // const User = require("../models/User");
 // const Pet = require("../models/Pet");
+
+
 import express from "express";
 import User from "../models/User.js";
 import Pet from "../models/Pet.js";
 
 const router = express.Router();
 
-// Dummy middleware (replace with real auth if needed)
-// const isAdmin = (req, res, next) => {
-//   const email = req.headers["x-user-email"];
-//   if (email && email.endsWith("@admin")) {
-//     next();
-//   } else {
-//     res.status(403).json({ message: "Access denied" });
+
+
+// const verifyAdmin = (req, res, next) => {
+//   const username = req.headers.username;
+
+//   if (!username || !username.endsWith("@admin")) {
+//     return res.status(403).json({ message: "Access denied" });
 //   }
+
+//   next();
 // };
 
-const verifyAdmin = (req, res, next) => {
-  const username = req.headers.username;
-
-  if (!username || !username.endsWith("@admin")) {
-    return res.status(403).json({ message: "Access denied" });
-  }
-
-  next();
-};
 
 
-// Get all users
-router.get("/users", verifyAdmin, async (req, res) => {
+router.get("/users",  async (req, res) => {
   try {
     const users = await User.find({});
     res.json(users);
@@ -40,7 +34,7 @@ router.get("/users", verifyAdmin, async (req, res) => {
 });
 
 // Delete user by ID
-router.delete("/users/:id", verifyAdmin, async (req, res) => {
+router.delete("/users/:id", async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: "User deleted" });
@@ -50,7 +44,7 @@ router.delete("/users/:id", verifyAdmin, async (req, res) => {
 });
 
 // Get all pets
-router.get("/pets", verifyAdmin, async (req, res) => {
+router.get("/pets", async (req, res) => {
   try {
     const pets = await Pet.find({});
     res.json(pets);
@@ -60,7 +54,7 @@ router.get("/pets", verifyAdmin, async (req, res) => {
 });
 
 // Delete pet by ID
-router.delete("/pets/:id", verifyAdmin, async (req, res) => {
+router.delete("/pets/:id",async (req, res) => {
   try {
     await Pet.findByIdAndDelete(req.params.id);
     res.json({ message: "Pet deleted" });
