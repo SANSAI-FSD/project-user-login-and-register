@@ -10,7 +10,7 @@ import adminRoutes from "./routes/admin.js";
 app.use(cors({
   origin: "*",
   methods: ["GET", "POST", "DELETE", "PUT"],
-  allowedHeaders: ["Content-Type", "username"], // ✅ Include custom header
+  
 }));
 dotenv.config();
 const app = express();
