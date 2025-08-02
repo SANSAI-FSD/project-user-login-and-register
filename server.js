@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import petRoutes from "./routes/pets.js";
 import adminRoutes from "./routes/admin.js";
+import soldPetsRoute from './routes/soldPets.js';
 
 // ✅ Load environment variables
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/admin", adminRoutes);
+app.use('/api/admin/soldpets', soldPetsRoute);
 
 // ✅ Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
