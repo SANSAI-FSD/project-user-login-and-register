@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js";
 import petRoutes from "./routes/pets.js";
 import adminRoutes from "./routes/admin.js";
 import soldPetsRoute from './routes/soldPets.js';
+import promoRoutes from "./routes/promoRoutes.js"
 
 // ✅ Load environment variables
 dotenv.config();
@@ -26,6 +27,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/pets", petRoutes);
 app.use("/api/admin", adminRoutes);
 app.use('/api/admin/soldpets', soldPetsRoute);
+app.use("/api/promos", promoRoutes); 
+
 
 // ✅ Connect to MongoDB and start server
 mongoose.connect(process.env.MONGO_URI)
