@@ -1,7 +1,9 @@
 import express from "express";
 import Promo from "../models/Promo.js"; // Ensure .js extension for ES modules
-
+import { storage } from '../utils/cloudinary.js'; // Cloudinary config
+import multer from "multer";
 const router = express.Router();
+const upload = multer({ storage });
 
 // Get all promos
 router.get("/", async (req, res) => {
@@ -14,10 +16,14 @@ router.get("/", async (req, res) => {
 });
 
 // Add a promo
-router.post("/", async (req, res) => {
+router.post("/",upload.single('image'), async (req, res) => {
   try {
     const { image, title, description, link } = req.body;
-    const newPromo = new Promo({ image, title, description, link });
+    const newPromo = new Promo({ 
+        image : req.file.path, // Cloudinary URL
+        title, 
+        description, 
+        link });
     await newPromo.save();
     res.status(201).json(newPromo);
   } catch (err) {

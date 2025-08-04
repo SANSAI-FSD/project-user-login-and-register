@@ -22,6 +22,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://project-pet.netlify.app'],
+  credentials: true, // Only if using cookies/auth
+}));
 // ✅ Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/pets", petRoutes);
