@@ -120,4 +120,35 @@ router.delete("/pets/:id", async (req, res) => {
   }
 });
 
+// /api/admin/stats?date=2025-08-04
+router.get("/stats", async (req, res) => {
+  try {
+    const date = req.query.date ? new Date(req.query.date) : new Date();
+    date.setHours(0, 0, 0, 0);
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    const totalUsers = await User.countDocuments();
+    const todayUsers = await User.countDocuments({ createdAt: { $gte: date, $lt: nextDay } });
+
+    const totalPets = await Pet.countDocuments();
+    const todayPets = await Pet.countDocuments({ createdAt: { $gte: date, $lt: nextDay } });
+
+    const totalSoldPets = await SoldPet.countDocuments();
+    const todaySoldPets = await SoldPet.countDocuments({ soldAt: { $gte: date, $lt: nextDay } });
+
+    res.json({
+      totalUsers,
+      todayUsers,
+      totalPets,
+      todayPets,
+      totalSoldPets,
+      todaySoldPets,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching stats", error: error.message });
+  }
+});
+
+
 export default router;
